@@ -10,20 +10,20 @@ void built_env(char **line, int *cont);
 */
 int builtin(char **line, int *cont)
 {
-	printf("checking builtin\n");
+/*	printf("checking builtin\n");*/
 	if (line == NULL || line[0] == NULL)
 		return (0);
-	printf("line and line[0] not null\n");
-	printf("line[0] is: %s\n", line[0]);
+/*	printf("line and line[0] not null\n");*/
+/*	printf("line[0] is: %s\n", line[0]);*/
 	if (_strcmp(line[0], "exit") == 1)
 	{
-		printf("it did match exit\n");
+/*		printf("it did match exit\n");*/
 		built_exit(line, cont);
 		return (1);
 	}
 	if (_strcmp(line[0], "env") == 1)
 	{
-		printf("it did match env\n");
+/*		printf("it did match env\n");*/
 		built_env(line, cont);
 		return (1);
 	}
@@ -45,7 +45,7 @@ void built_env(char **line, int *cont)
 	(void)line;
 	(void)cont;
 
-	printf("printinf env:\n");
+/*	printf("printinf env:\n");*/
 	for (p = environ; *p; p++)
 	{
 		for (len = 0; (*p)[len];)
@@ -67,7 +67,7 @@ void built_exit(char **line, int *cont)
 	(void)line;
 /*	change void line when we put in args*/
 	*cont = 0;
-	printf("just changed cont to %d\n", cont[0]);
+/*	printf("just changed cont to %d\n", cont[0]);*/
 }
 
 /**
@@ -80,12 +80,12 @@ int _strcmp(char *str1, char *str2)
 {
 	int i;
 
-	printf("comparing two string\n");
+/*	printf("comparing two string\n");*/
 	for (i = 0; str1[i] != 0 && str2[i] != 0; i++)
 	{
 		if (str1[i] != str2[i])
 			return (0);
 	}
-	printf("they match\n");
+/*	printf("they match\n");*/
 	return (1);
 }
