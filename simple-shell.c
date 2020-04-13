@@ -1,9 +1,4 @@
 #include "shell.h"
-int builtin(char **line, int *cont);
-int _strcmp(char *str1, char *str2);
-void built_exit(char **line, int *cont);
-int exec(int argc, char *argv[], char *envp[]);
-char **format_line(char *linebuf);
 /**
 * main - runs the shell
 * Return: 0
@@ -33,12 +28,12 @@ int main(int argc, char *argv[], char *envp[])
 		line = format_line(linebuf);
 		built = builtin(line, &cont);
 /*		printf("cont is: %d\n", cont);*/
-		execi = (built == 0) ? exec(3, line, envp) : 0;/* 3 is currently just a placeholder*/
+		execi = (built == 0) ? exec(3, line, envp) : 0;/* 3 is a placeholder*/
 		free(line);
 		free(linebuf);
 		n = execi;
 /*		printf("the pid is %ul \n", getpid());*/
-/* we can combine the free and n = 0 into one subfunction for space if needed */
+/* can combine the free and n = 0 into function for space if needed */
 	}
 /*	write(1, "\n", 1); for testing purposes it helped to have*/
 	return (0);
@@ -105,6 +100,7 @@ int exec(int argc, char *argv[], char *envp[])
 		else
 			execve(pathfile, argv, envp);
 		write(1, "return not expected, exec error\n", 32);
+		exit(1);
 	}
 	wait(&pid);
 	if (p == 1)

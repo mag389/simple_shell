@@ -38,7 +38,6 @@ int builtin(char **line, int *cont)
 */
 void built_env(char **line, int *cont)
 {
-	extern char **environ;
 	char **p;
 	int len;
 
