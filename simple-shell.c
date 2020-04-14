@@ -13,10 +13,11 @@ int main(int argc, char *argv[], char *envp[])
 	ssize_t l;
 	size_t n = 0;
 
+	ex_status = 0;
 	signal(2, SIG_IGN);/*uncomment to disable quitting with ^C*/
 	(void)argv;
 	(void)argc;/* only will be used later*/
-	while (cont == 1)
+	while (cont++ > 0)
 	{
 		write(1, "$", 1);
 		l = getline(&linebuf, &n, stdin);/* change stdin if it's a file*/
@@ -36,6 +37,8 @@ int main(int argc, char *argv[], char *envp[])
 /* can combine the free and n = 0 into function for space if needed */
 	}
 /*	write(1, "\n", 1); for testing purposes it helped to have*/
+	if (ex_status > 0)
+		exit(ex_status);
 	return (0);
 }
 /**
@@ -100,7 +103,7 @@ int exec(int argc, char *argv[], char *envp[])
 		else
 			execve(pathfile, argv, envp);
 		write(1, "return not expected, exec error\n", 32);
-		exit(1);
+/*		exit(1);*/
 	}
 	wait(&pid);
 	if (p == 1)

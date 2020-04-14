@@ -44,14 +44,12 @@ void built_env(char **line, int *cont)
 	(void)line;
 	(void)cont;
 
-/*	printf("printinf env:\n");*/
 	for (p = environ; *p; p++)
 	{
 		for (len = 0; (*p)[len];)
 			len++;
 		write(1, *p, len);
 		write(1, "\n", 1);
-/*		printf ("%s\n", *p);*/
 	}
 }
 
@@ -65,8 +63,10 @@ void built_exit(char **line, int *cont)
 {
 	(void)line;
 /*	change void line when we put in args*/
-	*cont = 0;
+	*cont *= -1;
 /*	printf("just changed cont to %d\n", cont[0]);*/
+	if (line[1])
+		ex_status = atoi(line[1]);
 }
 
 /**
@@ -85,6 +85,8 @@ int _strcmp(char *str1, char *str2)
 		if (str1[i] != str2[i])
 			return (0);
 	}
+	if (str1[i] != str2[i])
+		return (0);
 /*	printf("they match\n");*/
 	return (1);
 }

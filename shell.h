@@ -26,4 +26,5 @@ void built_exit(char **line, int *cont);
 void built_env(char **line, int *cont);
 
 extern char **environ;
+int ex_status;
 #endif
