@@ -117,6 +117,5 @@ int exec(int argc, char *argv[], char *envp[])
 	wait(&pid);
 	if (p == 1)
 		free(pathfile);
-/*	write(1, "\n", 1); should we still print line on failure */
 	return (0);
 }
