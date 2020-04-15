@@ -60,7 +60,7 @@ char **format_line(char *linebuf)
 	}
 	linebuf[len] = 0; /*end it with a null, instead of \n */
 	newline = malloc(sizeof(char *) * (numtokens + 2));
-	newline[0] = strtok(linebuf, " ");
+	newline[0] = strtok(linebuf, " \n\v\r\a\t");
 	for (i = 1; i < numtokens + 1; i++)
 	{
 		newline[i] = strtok(NULL, " ");
