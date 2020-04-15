@@ -12,7 +12,7 @@ int builtin(char **line, int *cont)
 {
 /*	printf("checking builtin\n");*/
 	if (line == NULL || line[0] == NULL)
-		return (0);
+		return (1);
 /*	printf("line and line[0] not null\n");*/
 /*	printf("line[0] is: %s\n", line[0]);*/
 	if (_strcmp(line[0], "exit") == 1)

@@ -19,7 +19,8 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;/* only will be used later*/
 	while (cont++ > 0)
 	{
-		write(1, "$", 1);
+		if (isatty(STDIN_FILENO))
+			write(1, "$ ", 2);
 		l = getline(&linebuf, &n, stdin);/* change stdin if it's a file*/
 		if (l == -1)
 		{
@@ -84,25 +85,31 @@ int exec(int argc, char *argv[], char *envp[])
 	char *pathfile;
 
 	(void)argc;
-	if (argv[0] == NULL || access(argv[0], F_OK | X_OK) != 0)
-	{
+/*	if (argv[0] == NULL || argv[0] != NULL)*/
+/*	{*/
+	pathfile = check_path(argv[0], envp);
+	if (pathfile)
 		p = 1;
-		pathfile = check_path(argv[0], envp);
-		if (!pathfile)
-			return (0);/*change to print something */
-		printf("the pathfile in exec: %s\n", pathfile);
-	}
-
+/*			return (0);  change to print something */
+/*		printf("the pathfile in exec: %s\n", pathfile);*/
+/*	}*/
+	if ((access(argv[0], F_OK | X_OK) != 0 && p == 0) || argv[0][0] == '/')
+		return (0);
 	pid = fork();
 	if (pid == -1)
 		perror("fork error");
 	else if (pid == 0)
 	{
 		if (p == 0)
+		{
+			printf("not path\n");
 			execve(argv[0], argv, envp);
+		}
 		else
 			execve(pathfile, argv, envp);
 		write(1, "return not expected, exec error\n", 32);
+/*		if (pathfile)*/
+/*			free(pathfile);*/
 /*		exit(1);*/
 	}
 	wait(&pid);
