@@ -17,7 +17,7 @@ int main(int argc, char *argv[], char *envp[])
 	signal(2, SIG_IGN);/*uncomment to disable quitting with ^C*/
 	(void)argv;
 	(void)argc;/* only will be used later*/
-	while (cont++ > 0)
+	while (cont > 0)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
@@ -29,13 +29,11 @@ int main(int argc, char *argv[], char *envp[])
 		}
 		line = format_line(linebuf);
 		built = builtin(line, &cont);
-/*		printf("cont is: %d\n", cont);*/
-		execi = (built == 0) ? exec(3, line, envp) : 0;/* 3 is a placeholder*/
+		execi = (built == 0) ? exec(cont, line, envp) : 0;/* 3 is a placeholder*/
 		free(line);
 		free(linebuf);
 		n = execi;
-/*		printf("the pid is %ul \n", getpid());*/
-/* can combine the free and n = 0 into function for space if needed */
+		cont++;
 	}
 /*	write(1, "\n", 1); for testing purposes it helped to have*/
 	if (ex_status > 0)
@@ -84,7 +82,7 @@ int exec(int argc, char *argv[], char *envp[])
 	int p = 0;
 	char *pathfile;
 
-	(void)argc;
+/*	(void)argc;*/
 /*	if (argv[0] == NULL || argv[0] != NULL)*/
 /*	{*/
 	pathfile = check_path(argv[0], envp);
@@ -94,7 +92,10 @@ int exec(int argc, char *argv[], char *envp[])
 /*		printf("the pathfile in exec: %s\n", pathfile);*/
 /*	}*/
 	if ((access(argv[0], F_OK | X_OK) != 0 && p == 0) || argv[0][0] == '/')
+	{
+		print_error(argc, argv[0], 0);
 		return (0);
+	}
 	pid = fork();
 	if (pid == -1)
 		perror("fork error");
@@ -102,12 +103,12 @@ int exec(int argc, char *argv[], char *envp[])
 	{
 		if (p == 0)
 		{
-			printf("not path\n");
+/*			printf("not path\n");*/
 			execve(argv[0], argv, envp);
 		}
 		else
 			execve(pathfile, argv, envp);
-		write(1, "return not expected, exec error\n", 32);
+		write(2, "return not expected, exec error\n", 32);
 /*		if (pathfile)*/
 /*			free(pathfile);*/
 /*		exit(1);*/

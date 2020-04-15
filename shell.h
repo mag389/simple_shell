@@ -24,6 +24,10 @@ int builtin(char **line, int *cont);
 int _strcmp(char *str1, char *str2);
 void built_exit(char **line, int *cont);
 void built_env(char **line, int *cont);
+/* errors */
+int _atoi(char *str);
+char *_itoa(int num);
+void print_error(int cont, char *arg, int errno);
 
 extern char **environ;
 int ex_status;

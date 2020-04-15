@@ -66,7 +66,7 @@ void built_exit(char **line, int *cont)
 	*cont *= -1;
 /*	printf("just changed cont to %d\n", cont[0]);*/
 	if (line[1])
-		ex_status = atoi(line[1]);
+		ex_status = _atoi(line[1]) % 256;
 }
 
 /**
