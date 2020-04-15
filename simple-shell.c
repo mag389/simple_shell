@@ -25,7 +25,7 @@ int main(int argc, char *argv[], char *envp[])
 		if (l == -1)
 		{
 			free(linebuf);
-			exit(1);
+			exit(0);
 		}
 		line = format_line(linebuf);
 		built = builtin(line, &cont);
