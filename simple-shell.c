@@ -91,8 +91,9 @@ int exec(int argc, char *argv[], char *envp[])
 /*			return (0);  change to print something */
 /*		printf("the pathfile in exec: %s\n", pathfile);*/
 /*	}*/
-	if ((access(argv[0], F_OK | X_OK) != 0 && p == 0) || argv[0][0] == '/')
+	if ((access(argv[0], F_OK | X_OK) != 0 && p == 0))
 	{
+/*	or if it's a directory */
 		print_error(argc, argv[0], 0);
 		return (0);
 	}
