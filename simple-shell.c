@@ -14,14 +14,14 @@ int main(int argc, char *argv[], char *envp[])
 	size_t n = 0;
 
 	ex_status = 0;
-	signal(2, SIG_IGN);/*uncomment to disable quitting with ^C*/
+	signal(2, SIG_IGN);
 	(void)argv;
-	(void)argc;/* only will be used later*/
+	(void)argc;
 	while (cont > 0)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
-		l = getline(&linebuf, &n, stdin);/* change stdin if it's a file*/
+		l = getline(&linebuf, &n, stdin);
 		if (l == -1)
 		{
 			free(linebuf);
@@ -29,13 +29,12 @@ int main(int argc, char *argv[], char *envp[])
 		}
 		line = format_line(linebuf);
 		built = builtin(line, &cont);
-		execi = (built == 0) ? exec(cont, line, envp) : 0;/* 3 is a placeholder*/
+		execi = (built == 0) ? exec(cont, line, envp) : 0;
 		free(line);
 		free(linebuf);
 		n = execi;
 		cont++;
 	}
-/*	write(1, "\n", 1); for testing purposes it helped to have*/
 	if (ex_status > 0)
 		exit(ex_status);
 	return (0);
@@ -49,16 +48,15 @@ char **format_line(char *linebuf)
 {
 	int len, i, numtokens = 0;
 	char **newline;
-/*	char *token; may be used later, as of now not*/
 
-	if (linebuf == NULL)/*not sure if necesary, check if we can get passed null*/
+	if (linebuf == NULL)
 		return (NULL);
-	for (len = 0; linebuf[len] != '\n'; len++)/*came from getline so ends on \n*/
+	for (len = 0; linebuf[len] != '\n'; len++)
 	{
 		if (linebuf[len] == ' ')
 			numtokens++;
 	}
-	linebuf[len] = 0; /*end it with a null, instead of \n */
+	linebuf[len] = 0;
 	newline = malloc(sizeof(char *) * (numtokens + 2));
 	newline[0] = strtok(linebuf, " \n\v\r\a\t");
 	for (i = 1; i < numtokens + 1; i++)
@@ -82,15 +80,9 @@ int exec(int argc, char *argv[], char *envp[])
 	int p = 0;
 	char *pathfile;
 
-/*	(void)argc;*/
-/*	if (argv[0] == NULL || argv[0] != NULL)*/
-/*	{*/
 	pathfile = check_path(argv[0], envp);
 	if (pathfile)
 		p = 1;
-/*			return (0);  change to print something */
-/*		printf("the pathfile in exec: %s\n", pathfile);*/
-/*	}*/
 	if ((access(argv[0], F_OK | X_OK) != 0 && p == 0))
 	{
 /*	or if it's a directory */
@@ -104,15 +96,11 @@ int exec(int argc, char *argv[], char *envp[])
 	{
 		if (p == 0)
 		{
-/*			printf("not path\n");*/
 			execve(argv[0], argv, envp);
 		}
 		else
 			execve(pathfile, argv, envp);
 		write(2, "return not expected, exec error\n", 32);
-/*		if (pathfile)*/
-/*			free(pathfile);*/
-/*		exit(1);*/
 	}
 	wait(&pid);
 	if (p == 1)

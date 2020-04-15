@@ -12,7 +12,6 @@ char *check_path(char *file, char *envp[])
 	int index, marker = 0, f = 0;
 
 	path = get_env("PATH", envp);
-/*	printf("the partial path is: %s\n", path);*/
 	if (!file || !file[0])
 		return (NULL);
 	for (index = 0; path[index]; index++)
@@ -49,7 +48,6 @@ char *path_concat(char *path, char *file)
 
 	lenf = _strlen(file);
 	lenp = 0;
-/*	printf("the lenf is: %d\n", lenf);*/
 	while (path[lenp] != 0 && path[lenp] != ':')
 		lenp++;
 	cat = malloc(lenp + lenf + 2);
@@ -61,7 +59,6 @@ char *path_concat(char *path, char *file)
 	for (i = 0; i < lenf; i++)
 		cat[i + 1 + lenp] = file[i];
 	cat[lenf + lenp + 1] = 0;
-/*	printf("the full path is: %s\n", cat);*/
 	return (cat);
 }
 
