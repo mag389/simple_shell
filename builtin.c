@@ -2,6 +2,7 @@
 int _strcmp(char *str1, char *str2);
 void built_exit(char **line, int *cont);
 void built_env(char **line, int *cont);
+void built_help(char **line, int *cont);
 /**
 * builtin - checks for builtins, executes upon finding
 * Return: 1 if a function was found and run, otherwise 0
@@ -22,9 +23,38 @@ int builtin(char **line, int *cont)
 		built_env(line, cont);
 		return (1);
 	}
+	if (_strcmp(line[0], "help") == 1)
+	{
+		built_help(line, cont);
+		return (1);
+	}
 	return (0);
 }
+/**
+* built_help - the help builtin
+* Return: void
+* @line: the given command for help
+* @cont: loop check variable to change
+*/
+void built_help(char **line, int *cont)
+{
+	(void)cont;
 
+	if (!line[1])
+	{
+		write(1, "Usage: help [BUILTIN]\n", 22);
+	}
+	else if (_strcmp(line[1], "exit") == 1)
+		write(1, "exits the shell, takes integer argument as exit code\n", 53);
+	else if (_strcmp(line[1], "env") == 1)
+		write(1, "prints the entire current environment\n", 38);
+	else if (_strcmp(line[1], "help") == 1)
+		write(1, "return info about builtin commands\n", 35);
+	else if (_strcmp(line[1], "list") == 1)
+		write(1, "builtin commands: exit, env, help, list\n", 40);
+	else
+		write(1, "command not recognized, try list to see builtin commands\n", 57);
+}
 /**
 * built_env - the env builtin, prints env
 * Return: void
