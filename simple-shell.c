@@ -55,6 +55,13 @@ char **format_line(char *linebuf)
 	{
 		if (linebuf[len] == ' ')
 			numtokens++;
+		if (linebuf[len] == '#')
+		{
+			if (len == 0)
+				linebuf[len] = '\0';
+			else if (linebuf[len - 1] == ' ')
+				linebuf[len] = '\0';
+		}
 	}
 	linebuf[len] = 0;
 	newline = malloc(sizeof(char *) * (numtokens + 2));
