@@ -83,10 +83,19 @@ int exec(int argc, char *argv[], char *envp[])
 	pathfile = check_path(argv[0], envp);
 	if (pathfile)
 		p = 1;
+	if ((access(argv[0], F_OK) != 0 && p == 0))
+	{
+		print_error(argc, argv[0], 0);
+		return (0);
+	}
 	if ((access(argv[0], F_OK | X_OK) != 0 && p == 0))
 	{
-/*	or if it's a directory */
-		print_error(argc, argv[0], 0);
+		print_error(argc, argv[0], 1);
+		return (0);
+	}
+	if (p == 0 && _isdir(argv[0]) == 1)
+	{
+		print_error(argc, argv[0], 1);
 		return (0);
 	}
 	pid = fork();
@@ -106,4 +115,19 @@ int exec(int argc, char *argv[], char *envp[])
 	if (p == 1)
 		free(pathfile);
 	return (0);
+}
+/**
+* _isdir - checks id the directory exists
+* Return: 1 if it does, else 0
+* @name: the name of the possible directory
+*/
+int _isdir(char *name)
+{
+	DIR *dir;
+
+	dir = opendir(name);
+	if (dir == NULL)
+		return (0);
+	free(dir);
+	return (1);
 }

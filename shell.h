@@ -10,10 +10,12 @@
 #include <string.h>
 #include <stdarg.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 /* simple shell */
 int exec(int argc, char *argv[], char *envp[]);
 char **format_line(char *linebuf);
+int _isdir(char *name);
 /* path file */
 char *check_path(char *file, char *envp[]);
 char *get_env(char *var, char *envp[]);
@@ -28,7 +30,7 @@ void built_env(char **line, int *cont);
 int _atoi(char *str);
 char *_itoa(int num);
 void print_error(int cont, char *arg, int errno);
-
+int _strchr(char *str, char c);
 extern char **environ;
 int ex_status;
 #endif

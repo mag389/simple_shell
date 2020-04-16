@@ -68,6 +68,26 @@ void print_error(int cont, char *arg, int errno)
 	write(2, arg, _strlen(arg));
 	if (errno == 0)
 		write(2, ": not found\n", 12);
+	else if (errno == 1)
+		write(2, ": Permission denied\n", 20);
 	else
 		write(2, "\n", 1);
+}
+
+/**
+* _strchr - finds if a char is in a str
+* Return: the index > 0 of the first char appearnce, or -1 on failure
+* @str: the string to check in
+* @c: the char to search for
+*/
+int _strchr(char *str, char c)
+{
+	int i;
+
+	if (!str)
+		return (-1);
+	for (i = 0; str[i] != '\0'; i++)
+		if (str[i] == c)
+			return (i);
+	return (-1);
 }

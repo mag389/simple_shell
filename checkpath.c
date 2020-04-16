@@ -14,6 +14,8 @@ char *check_path(char *file, char *envp[])
 	path = get_env("PATH", envp);
 	if (!file || !file[0])
 		return (NULL);
+	if (_strchr(file, '/') >= 0)
+		return (NULL);
 	for (index = 0; path[index]; index++)
 	{
 		if (marker == 1)
