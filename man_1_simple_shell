@@ -1,0 +1,22 @@
+.TH simple_shell(1) "April 16, 2020" "1.0" "simple_shell man page"
+.SH NAME
+.B simple_shell
+.SH SYNOPSIS
+.B simple_shell [command file[arguement]]
+.SH DESCRIPTION
+.B simple_shell is a simple command interpreter for the linux kernel. This current version is meant as a vehicle to learn about how the shell works and create various solutions to solve the many tasks and problems that a shell program can handle. 
+.B non-interactive
+$ echo "bin/ls" | ./hsh
+hsh main.c shell.c
+.B interactive
+($) /bin/ls
+hsh main.c shell.c
+.SH BUILT-IN
+.B exit - to exit program.
+.B env - to print current environment.
+.SH SEE ALSO
+sh(1) or dash(1)
+.SH BUGS
+I don't see any do you...?
+.SH AUTHOR
+Micheal A George, Hiram C Velez
