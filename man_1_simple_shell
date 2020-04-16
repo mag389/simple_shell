@@ -4,7 +4,7 @@
 .SH SYNOPSIS
 .B simple_shell [command file[arguement]]
 .SH DESCRIPTION
-.B simple_shell is a simple command interpreter for the linux kernel. This current version is meant as a vehicle to learn about how the shell works and create various solutions to solve the many tasks and problems that a shell program can handle. 
+.B simple_shell is a simple command interpreter for the linux kernel. This current version is meant as a vehicle to learn about how the shell works and create various solutions to solve the many tasks and problems that a shell program can handle.
 .B non-interactive
 $ echo "bin/ls" | ./hsh
 hsh main.c shell.c
